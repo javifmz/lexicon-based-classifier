@@ -5,7 +5,7 @@ A lexicon-based classifier
 ### Lexicon format example
 
 ```json
-lexicon = {
+{
   "positive": [
     { "term": "excellent", "weight": 1.0 },
     { "term": "good", "weight": 0.7 }
