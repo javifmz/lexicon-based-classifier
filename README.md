@@ -1,6 +1,6 @@
 # Lexicon-based Classifier
 
-A lexicon-based classifier
+Classifies texts using a previously generated lexicon. The lexicon contains a list of weighted terms for each of the classification labels. The weights of these terms are added to each label, and the label with the higher weight is chosen.
 
 ### Lexicon format example
 
@@ -24,17 +24,15 @@ classifier = LexiconBasedClassifier(lexicon)
 prediction = classifier.predict(X)
 ```
 
-See the [example](./libclassifier_example.py)
+### Usage with different prediction indexes
 
-### Execute example
+```python
+labels = [ "positive", "negative" ]
+classifier = LexiconBasedClassifier(lexicon, labels=labels)
+prediction = classifier.predict(X)
+```
+
+### Execute the example
 
 ```bash
 python -m lbclassifier_example
-```
-
-### Execute example with docker (if python is not installed)
-
-```bash
-sudo docker run --rm -it -v "$PWD:/app" lbclassifier python -u -m lbclassifier_example
-```
-

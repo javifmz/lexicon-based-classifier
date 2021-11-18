@@ -17,10 +17,9 @@ X = [
   'This book is horrible',
 ]
 
-labels_index = {
-  "positive": 0,
-  "negative": 1,
-}
+labels = [ "positive", "negative" ]
 
-classifier = LexiconBasedClassifier(lexicon, labels_index=labels_index)
+classifier = LexiconBasedClassifier(lexicon, labels=labels)
 prediction = classifier.predict(X)
+prediction_labels = classifier.get_labels(prediction)
+print(prediction, prediction_labels)

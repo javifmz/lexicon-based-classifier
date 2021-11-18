@@ -3,11 +3,12 @@ import re
 
 class LexiconBasedClassifier :
 
-  def __init__(self, lexicon, tokenizer=None, labels_index=None) :
+  def __init__(self, lexicon, tokenizer=None, labels=None) :
     """Creates a classifier using a previously created lexicon"""
     self.lexicon = lexicon
     self.tokenizer = tokenizer if tokenizer is not None else lambda text: re.split('[^\w]+', text.lower())
-    self.labels_index = labels_index if labels_index is not None else { term: index for index, term in enumerate(lexicon) }      
+    self.labels = labels.copy() if labels is not None else [ term for term in lexicon ]
+    self.labels_index = { term: index for index, term in enumerate(self.labels) }
 
   def fit(self, X) :
     """This method does nothing, only for compatibility"""
@@ -26,4 +27,14 @@ class LexiconBasedClassifier :
           term_tokens = self.tokenizer(term)
           if term_tokens[0] in doc_tokens :
             doc_weight[label_index] += term_weight
-      predict[doc_index] = 0
+      max_value = max(doc_weight)
+      max_index = doc_weight.index(max_value)
+      predict[doc_index] = max_index
+    return predict
+  
+  def predict_labels(self, X) :
+    prediction = self.predict(X)
+    return self.get_labels(prediction)
+
+  def get_labels(self, prediction) :
+    return [ self.labels[label_index] for label_index in prediction ]
